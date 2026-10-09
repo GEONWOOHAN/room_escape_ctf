@@ -1,0 +1,71 @@
+x-uos-ctf:
+  category: web
+
+services:
+  redis:
+    image: redis:7-alpine
+    user: redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1"]
+    volumes:
+      - vault-state:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
+    cpus: 0.5
+    mem_limit: 256m
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  vault-hard:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - "${VAULT_ENV_FILE:?run python3 prepare_deployment.py first}"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      REQUEST_BUDGET: "16000"
+      REQUIRE_RUNTIME_FLAG: "1"
+      REQUIRE_RUNTIME_PADDING: "1"
+      CTFD_BASE_URL: ${CTFD_BASE_URL:-https://contest.roomescapectf2026.site}
+      CTFD_AUTH_CACHE_SECONDS: ${CTFD_AUTH_CACHE_SECONDS:-10}
+    ports:
+      - "${VAULT_BIND_ADDRESS:-127.0.0.1}:${VAULT_PORT:-40569}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    cpus: 2.0
+    mem_limit: 1g
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  vault-state:

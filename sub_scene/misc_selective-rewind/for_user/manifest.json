@@ -1,0 +1,52 @@
+{
+  "cache_lines": 32,
+  "challenge": "selective-state-rewind",
+  "faults_per_image": 5,
+  "flag_enc_sha256": "cf1d1ec4834a37ce0bf82dc813d691e74b8ebf0b3a780ce47fb1cd7fbe4cfae1",
+  "flag_seal": {
+    "aad_ascii": "selective-state-rewind-v3",
+    "aead": "AES-256-GCM",
+    "canonical_plan": "ASCII PLN3, then exactly five strictly increasing records: checkpoint uint32 little-endian followed by line uint16 little-endian",
+    "container_magic_ascii": "SRW3",
+    "image_order": [
+      "image_a",
+      "image_b",
+      "image_c"
+    ],
+    "kdf_domain_ascii": "selective-state-rewind-fleet-receipt-v3",
+    "kdf_domain_has_trailing_nul": true,
+    "key_hash": "SHA-256",
+    "key_material": "domain || 00 ||, for each image in image_order: image_name ASCII || 00 || canonical_plan || 32 raw bytes decoded from final_state.digest",
+    "nonce_bytes": 12,
+    "tag_bytes": 16
+  },
+  "images": {
+    "image_a": {
+      "bus_trace_sha256": "8d3eba0d058a5eae57b31ee41ab659cca97e68bc3bf0a7b512c12e175c604083",
+      "initial_state_sha256": "df246a8758f3e54c4c3b129c84b67cf213f685b674f9ed2d8a119514b5eb72ac",
+      "instructions": 11959,
+      "program_sha256": "8eb34833127c440cbed7172479048ac3db43e0b641eae6e9f0a98c11fd98c899"
+    },
+    "image_b": {
+      "bus_trace_sha256": "d2bb7afedef3127ac611c8d73454f9c92f78ec67edf6b0a4575ced59f683d5bd",
+      "initial_state_sha256": "e39bf2216c3628ca81902ab7739d91870b9bda35b243c167fd5f5291619ece48",
+      "instructions": 12128,
+      "program_sha256": "ea45d5c7e9920c0a9317e236ef21159170ab0b3bcd62d20d9ebb52f9297c760e"
+    },
+    "image_c": {
+      "bus_trace_sha256": "25c6bf3b685c779dba5c88df5fdc93f46e0137c8e7162ceb2d52ab1780d639f6",
+      "initial_state_sha256": "d49537fcc7f6352ee6a5582123a1a50266a6973645fa60b96ddb46dfb932f05f",
+      "instructions": 11473,
+      "program_sha256": "b06ffa9a60c26272f2bbab4c3f1f7720832344e1894914b1dbea2be45fba8789"
+    }
+  },
+  "line_count": 512,
+  "line_size": 64,
+  "replay_receipt": {
+    "final_state_digest": "created only for an exact successful plan",
+    "valid_exact_plan": "{\"success\":true}",
+    "valid_wrong_plan": "{\"success\":false}"
+  },
+  "replay_vm_sha256": "0110d7b118904117db9304a55ae59119846c2d2ad239c9348337c3f4e6c05fa8",
+  "version": 3
+}

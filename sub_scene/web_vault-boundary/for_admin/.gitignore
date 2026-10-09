@@ -1,0 +1,4 @@
+.env
+team_tokens.csv
+.build/
+**/__pycache__/

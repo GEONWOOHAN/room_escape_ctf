@@ -1,0 +1,1 @@
+"""Administrator-only solution assets."""

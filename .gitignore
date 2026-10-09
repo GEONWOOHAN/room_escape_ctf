@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*
+!.env.example
+.runtime/
+.build/
+state/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+Thumbs.db
+

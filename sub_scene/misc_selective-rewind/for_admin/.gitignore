@@ -1,0 +1,3 @@
+solution/generated/
+**/__pycache__/
+.build/

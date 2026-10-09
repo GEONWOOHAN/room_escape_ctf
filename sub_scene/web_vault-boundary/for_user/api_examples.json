@@ -1,0 +1,69 @@
+{
+  "session": {
+    "method": "POST",
+    "path": "/api/session",
+    "headers": {
+      "X-Team-Token": "CTFd에서 발급한 팀 토큰"
+    },
+    "body": {}
+  },
+  "authenticated_headers": {
+    "X-Team-Session": "session 응답의 session 값"
+  },
+  "share": {
+    "method": "POST",
+    "path": "/api/share",
+    "body": {
+      "value": "case-reference=a"
+    }
+  },
+  "export": {
+    "method": "POST",
+    "path": "/api/export-size",
+    "body": {
+      "seed": 0,
+      "style": 0,
+      "filler": 0
+    }
+  },
+  "export_response": {
+    "size": 224,
+    "counter": 0,
+    "next_counter": 1,
+    "remaining": 15999
+  },
+  "measure": {
+    "method": "POST",
+    "path": "/api/measure",
+    "body": {
+      "value": "case-reference=a",
+      "exports": [
+        {
+          "seed": 0,
+          "style": 0,
+          "filler": 0
+        }
+      ]
+    },
+    "note": "exports는 1개부터 16개까지 가능하며 내부 측정 수만큼 예산을 사용합니다."
+  },
+  "measure_batch": {
+    "method": "POST",
+    "path": "/api/measure-batch",
+    "body": {
+      "measurements": [
+        {
+          "value": "case-reference=a",
+          "exports": [
+            {
+              "seed": 0,
+              "style": 0,
+              "filler": 0
+            }
+          ]
+        }
+      ]
+    },
+    "note": "measurements는 최대 16개이며 전체 내부 측정 수만큼 예산을 사용합니다."
+  }
+}

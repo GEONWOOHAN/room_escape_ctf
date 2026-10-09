@@ -1,0 +1,2 @@
+# team-id:challenge-token
+team-xxx:[REDACTED]

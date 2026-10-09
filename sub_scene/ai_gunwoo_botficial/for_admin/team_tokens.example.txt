@@ -1,0 +1,3 @@
+# Login token: ctfd_demo_botficial
+# Production files contain only SHA-256 digests. Generate them with provision.py.
+sha256$7be74b8111871bf75872cd65db79b5fd4b80a4fe07341a18821f31948a1cc590:demo

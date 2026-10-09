@@ -1,0 +1,8 @@
+for_user/
+solution/
+src/
+build.sh
+README.md
+test_ctfd_auth.py
+**/__pycache__/
+**/*.pyc

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+state/
+.env
+team_tokens.txt
+team_tokens.csv
+team_tokens.example.txt
+solution/
+test_app.py
+requirements-dev.txt
+README.md

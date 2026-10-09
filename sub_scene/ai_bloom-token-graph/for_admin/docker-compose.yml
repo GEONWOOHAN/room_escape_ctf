@@ -1,0 +1,40 @@
+x-uos-ctf:
+  category: ai
+
+services:
+  token-graph-hard:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - "${BLOOM_ENV_FILE:?run python3 prepare_deployment.py first}"
+    environment:
+      STATE_DB: /data/state.sqlite3
+      CTFD_BASE_URL: ${CTFD_BASE_URL:-https://contest.roomescapectf2026.site}
+      CTFD_AUTH_CACHE_SECONDS: ${CTFD_AUTH_CACHE_SECONDS:-10}
+    volumes:
+      - bloom-token-state:/data
+    ports:
+      - "${BLOOM_BIND_ADDRESS:-127.0.0.1}:${BLOOM_PORT:-40542}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    cpus: 2.0
+    mem_limit: 1g
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
+
+volumes:
+  bloom-token-state:

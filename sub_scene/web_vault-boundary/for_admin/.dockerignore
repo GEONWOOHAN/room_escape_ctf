@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+native/
+solution/
+tests/
+build_assets.py
+run_tests.py
+.env
+team_tokens.csv
+__pycache__/
+*.pyc

@@ -1,0 +1,45 @@
+name: CCTV-4
+
+x-uos-ctf:
+  category: pwnable
+
+services:
+  archive-sweeper:
+    build: .
+    image: ${IMAGE_NAME:-archive-sweeper:local}
+    platform: linux/amd64
+    ports:
+      - "${BIND_ADDRESS:-0.0.0.0}:${HOST_PORT:-40526}:31344"
+    environment:
+      CTFD_BASE_URL: ${CTFD_BASE_URL:-https://contest.roomescapectf2026.site}
+      STATE_DIR: /data
+      MAX_ACTIVE_CONNECTIONS: ${MAX_ACTIVE_CONNECTIONS:-128}
+      MAX_CONCURRENT_AUTH: ${MAX_CONCURRENT_AUTH:-8}
+      AUTH_TIMEOUT_SECONDS: ${AUTH_TIMEOUT_SECONDS:-15}
+      IDLE_TIMEOUT_SECONDS: ${IDLE_TIMEOUT_SECONDS:-300}
+    volumes:
+      - archive-sweeper-state:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import socket; s=socket.create_connection(('127.0.0.1',31344),2); s.close()"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    read_only: true
+    tmpfs:
+      - /tmp:size=8m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    mem_limit: 512m
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    stop_grace_period: 1s
+
+volumes:
+  archive-sweeper-state:

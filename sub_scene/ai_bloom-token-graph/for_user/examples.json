@@ -1,0 +1,81 @@
+[
+  {
+    "input": "SHA{V3_aa ab ac ad}",
+    "normalized": "sha{v3_aa ab ac ad}",
+    "token_ids": [
+      18,
+      50,
+      13,
+      52,
+      30,
+      27,
+      16,
+      12,
+      56
+    ]
+  },
+  {
+    "input": "%53%48%41%7BV3_aa_ab_ac%7D",
+    "normalized": "sha{v3_aa_ab_ac}",
+    "token_ids": [
+      18,
+      50,
+      13,
+      52,
+      30,
+      52,
+      27,
+      52,
+      16,
+      56
+    ]
+  },
+  {
+    "input": "ASSISTANT   SAYS: secure-response",
+    "normalized": "assistant says: secure response",
+    "token_ids": [
+      47,
+      23,
+      19,
+      26,
+      17
+    ]
+  },
+  {
+    "input": "analysis.result::complete",
+    "normalized": "analysis result::complete",
+    "token_ids": [
+      43,
+      8,
+      19,
+      19,
+      46
+    ]
+  },
+  {
+    "input": "sha { v3 _ aa ab ac",
+    "normalized": "sha { v3 _ aa ab ac",
+    "token_ids": [
+      18,
+      50,
+      13,
+      52,
+      30,
+      27,
+      16
+    ]
+  },
+  {
+    "input": "SYSTEM_notice__generated output",
+    "normalized": "system_notice__generated output",
+    "token_ids": [
+      41,
+      52,
+      21,
+      52,
+      52,
+      28,
+      38
+    ]
+  }
+]

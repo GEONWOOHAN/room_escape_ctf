@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "faults": [
+    {
+      "checkpoint": 1,
+      "line": 0
+    },
+    {
+      "checkpoint": 2,
+      "line": 0
+    },
+    {
+      "checkpoint": 3,
+      "line": 0
+    },
+    {
+      "checkpoint": 4,
+      "line": 0
+    },
+    {
+      "checkpoint": 5,
+      "line": 0
+    }
+  ]
+}

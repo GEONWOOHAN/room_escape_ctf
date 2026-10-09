@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+for interpreter in python3.14 python3.13 python3.12 python3.11 python3; do
+    command -v "$interpreter" >/dev/null 2>&1 || continue
+    tag=$("$interpreter" -c 'import sys; print(f"{sys.version_info.major}{sys.version_info.minor}")')
+    bytecode="device_runner.cpython-${tag}.pyc"
+    if [ -f "$bytecode" ]; then
+        PYTHONPATH="vendor${PYTHONPATH:+:$PYTHONPATH}" exec "$interpreter" "$bytecode"
+    fi
+done
+echo "장치 실행 실패: 지급본과 호환되는 CPython 인터프리터가 없습니다." >&2
+exit 1

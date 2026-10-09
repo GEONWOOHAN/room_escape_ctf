@@ -1,0 +1,42 @@
+space RAM 32 little
+input W[0..7] = load32(0x00600120 + 4*n)
+semantics: operations inside each STEP execute from left to right
+arx(d,s,r,c): W[d] = ror32((W[d] xor W[s]) + c, r)
+zext16(d,s,r,c): W[d] = ror32((W[d] xor zext16(W[s][15:0])) + c, r)
+sext16(d,s,r,c): W[d] = ror32((W[d] xor sext16(W[s][15:0])) + c, r)
+partial(d,s,r,c,b): store8(byte_address(W[d])+b, low8(ror32((W[d] xor W[s])+c,r)))
+each function also updates hidden route words at 0x10010024/0x10010028
+route transition must be recovered from target.elf; visible W semantics alone are not a function identity
+required terminal route target is stored at 0x10000030
+
+STEP 00: arx(0,1,6,0x34668868) ; arx(4,5,12,0x6ee2c1b3)
+STEP 01: arx(1,2,9,0x92a25862) ; arx(5,6,17,0xa7275074)
+STEP 02: arx(2,3,12,0x9c4832e1) ; zext16(6,7,22,0x32c22777)
+STEP 03: arx(3,4,15,0x9c9f86bb) ; arx(7,0,27,0x845f0249)
+STEP 04: arx(0,2,18,0x7338ddfb) ; arx(4,6,1,0x570900f6)
+STEP 05: arx(1,3,21,0x7b714931) ; arx(5,7,6,0xa678e3a2)
+STEP 06: arx(2,4,24,0x908c56d8) ; arx(6,0,11,0xa1dfa4db)
+STEP 07: sext16(3,5,27,0xc7932611) ; arx(7,1,16,0x96d1476c)
+STEP 08: arx(0,4,30,0x21be1225) ; arx(4,0,21,0x3650a3a0)
+STEP 09: arx(1,5,2,0x5664ef0f) ; arx(5,1,26,0x29354f71)
+STEP 10: arx(2,6,5,0xf6b30adf) ; arx(6,2,31,0xee7794d1)
+STEP 11: arx(3,7,8,0x8f3ba069) ; partial(7,3,5,0xfdd7861c,1)
+STEP 12: arx(0,3,11,0x253f6a40) ; arx(4,7,10,0x7a168a85)
+STEP 13: arx(1,4,14,0xd17876c4) ; arx(5,0,15,0x16af45e5)
+STEP 14: arx(2,5,17,0x84b794c8) ; arx(6,1,20,0x756d4791)
+STEP 15: arx(3,6,20,0x3553243a) ; zext16(7,2,25,0xa033b7d3)
+STEP 16: arx(0,5,23,0xaa18c6c1) ; arx(4,1,30,0x6a3b735a)
+STEP 17: arx(1,6,26,0x99314b02) ; partial(5,2,4,0x403c018a,3)
+STEP 18: arx(2,7,29,0xfc06b7bd) ; arx(6,3,9,0xd34cf6dd)
+STEP 19: sext16(3,0,1,0x5c1d80c0) ; arx(7,4,14,0xf2f6f5d1)
+STEP 20: arx(0,6,4,0xad9d62b1) ; arx(4,2,19,0x0dfbbf4c)
+STEP 21: arx(1,7,7,0x688b6b3a) ; arx(5,3,24,0x97d79abd)
+STEP 22: arx(2,0,10,0x923eac8d) ; arx(6,4,29,0x3d74028b)
+STEP 23: arx(3,1,13,0x68f4cfa0) ; zext16(7,5,3,0xdc2b6a0c)
+STEP 24: arx(0,7,16,0x2788b1b4) ; partial(4,3,8,0x011ac53f,2)
+STEP 25: arx(1,0,19,0xdfd46d69) ; arx(5,4,13,0x9c9811f4)
+STEP 26: sext16(2,1,22,0x36371859) ; arx(6,5,18,0x214d764b)
+STEP 27: arx(3,2,25,0xba6c0639) ; partial(7,6,23,0xf93ad402,1)
+
+store32(0x10010000 + 4*n, W[n]) for n in 0..7
+store8(0x10010020, 1)

@@ -1,0 +1,46 @@
+x-uos-ctf:
+  category: ai
+
+services:
+  botficial:
+    build: .
+    restart: unless-stopped
+    init: true
+    environment:
+      BOTFICIAL_DB: /data/botficial.db
+      CTFD_BASE_URL: ${CTFD_BASE_URL:-https://contest.roomescapectf2026.site}
+      CTFD_AUTH_CACHE_SECONDS: ${CTFD_AUTH_CACHE_SECONDS:-10}
+      BOTFICIAL_CASE_SECRET: ${BOTFICIAL_CASE_SECRET:?set BOTFICIAL_CASE_SECRET in .env}
+      # Production is deliberately deterministic and self-contained. No API
+      # key, external model, global agent queue, or per-request model cost.
+      BOTFICIAL_AGENT_BACKEND: local
+      BOTFICIAL_PROMPT_VERSION: ${BOTFICIAL_PROMPT_VERSION:-semantic-v3}
+      BOTFICIAL_ALLOW_DEMO: ${BOTFICIAL_ALLOW_DEMO:-0}
+    volumes:
+      - botficial-state:/data
+    ports:
+      - "40530:8000"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
+    cpus: 2.0
+    mem_limit: 1g
+    stop_grace_period: 15s
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  botficial-state:

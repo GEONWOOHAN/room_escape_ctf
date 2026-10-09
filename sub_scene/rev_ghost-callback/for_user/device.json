@@ -1,0 +1,69 @@
+{
+  "device": "gc-fleet",
+  "runtime": {
+    "platform": "Linux x86-64",
+    "cpython_bytecode_versions": [
+      "313",
+      "314"
+    ],
+    "launcher": "selects a matching installed CPython interpreter"
+  },
+  "architectures": {
+    "a": "ARMv7-M Thumb",
+    "b": "ARMv7-M Thumb",
+    "c": "ARMv7-M Thumb"
+  },
+  "firmware_base": "0x08000000",
+  "callback_model": {
+    "functions_per_device": 96,
+    "required_depth": 20,
+    "branching_per_depth": 4,
+    "addresses": "pointer-table based and independently randomized",
+    "terminal_state": "two coupled 32-bit words; recover the transition from firmware"
+  },
+  "memory": {
+    "flash": [
+      "0x08000000",
+      65536
+    ],
+    "sram": [
+      "0x20000000",
+      65536
+    ],
+    "sensor_mmio": [
+      "0x40001000",
+      4096
+    ],
+    "nvic": [
+      "0xE000E100",
+      4096
+    ]
+  },
+  "event_limits": {
+    "per_device": 512,
+    "cycle": 1000000,
+    "channel": [
+      0,
+      95
+    ],
+    "sample": [
+      0,
+      255
+    ],
+    "status_mask": 1
+  },
+  "calibration_derivation": {
+    "generation": 18,
+    "hash": "BLAKE2s-256",
+    "domain_hex": "67686f73742d63616c6c6261636b2d63616c6962726174696f6e2d70726f6f662d763500",
+    "device_order": [
+      "a",
+      "b",
+      "c"
+    ],
+    "per_device": "ASCII device name || two LE32 route target words || for each selected callback in route order: U8 id || LE32 expected guard || LE32 following guard || two LE32 transition terms || U8 first rotation || U8 second rotation",
+    "split": "digest[0:16]=MMIO seed, digest[16:32]=permutation seed",
+    "nonce": "the common 16-byte nonce checked by all three firmware images"
+  },
+  "flag_binding": "semantic install receipt, calibration digest, all three firmware digests and 160-byte callback transcripts; TAR metadata and equivalent event schedules are not answer material"
+}

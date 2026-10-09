@@ -1,0 +1,2 @@
+0xc1e9dab9|backup | status | is | ready | .
+0xb96f347e|archive | synchronization | completed | without | errors | .

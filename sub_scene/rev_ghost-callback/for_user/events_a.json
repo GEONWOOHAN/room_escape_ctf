@@ -1,0 +1,16 @@
+{
+  "events": [
+    {
+      "cycle": 1200,
+      "channel": 1,
+      "sample": 84,
+      "status": 0
+    },
+    {
+      "cycle": 2450,
+      "channel": 3,
+      "sample": 19,
+      "status": 0
+    }
+  ]
+}

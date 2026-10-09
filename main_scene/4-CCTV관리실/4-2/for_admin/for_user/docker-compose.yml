@@ -1,0 +1,23 @@
+name: "4-2"
+
+x-uos-ctf:
+  category: pwnable
+
+services:
+  framevault:
+    build: .
+    image: framevault:local
+    container_name: framevault-cctv-2
+    platform: linux/amd64
+    ports:
+      - "${BIND_ADDRESS:-0.0.0.0}:${HOST_PORT:-40599}:31342"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=4m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 192
+    mem_limit: 256m

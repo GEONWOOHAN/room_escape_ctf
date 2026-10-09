@@ -1,0 +1,9 @@
+.env
+openclaw-state/
+state/
+team_tokens.txt
+team_tokens.csv
+team_flags.csv
+__pycache__/
+.pytest_cache/
+*.pyc

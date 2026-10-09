@@ -1,0 +1,27 @@
+{
+  "flag": "SHA{a1b2c3d4e5f6-90d2}",
+  "payload": "a1b2c3d4e5f6",
+  "records": [
+    "recovery=SHA{a1b2c3d4e5f6-90d2}",
+    "recovery=SHA{a1b2c9aa1122-dead}",
+    "recovery=SHA{a1b2c3d4ffff-beef}",
+    "recovery=SHA{f00dbabe1234-cafe}"
+  ],
+  "layout_records": [
+    1,
+    3,
+    0,
+    2
+  ],
+  "canonical_layout": 2,
+  "bucket_size": 16,
+  "request_budget": 16000,
+  "style_constants": [
+    1831565813,
+    2769414579,
+    2654435769,
+    3235823838
+  ],
+  "aes_key": "78b4b32cbdf1f8336a16b6e71beb4363a290dae30d7931a710a81618313623f2",
+  "padding_key": "0dfa9f68b790239c83200169f9147df9bae9d46b7729321f6887173af2910c42"
+}

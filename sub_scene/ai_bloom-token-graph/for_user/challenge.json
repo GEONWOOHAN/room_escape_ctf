@@ -1,0 +1,23 @@
+{
+  "version": 4,
+  "payload_tokens": 18,
+  "window_tokens": 5,
+  "profiles": [
+    "A",
+    "B",
+    "C"
+  ],
+  "routing": "FNV-1a32(big-endian uint16 token ids) mod 3: AB, BC, AC",
+  "request_budget": 2000,
+  "budget_scope": "all generate and claim requests, cumulative per team",
+  "session_header": "X-Team-Token",
+  "session_endpoint": "POST /api/session",
+  "query_endpoint": "POST /api/generate",
+  "claim_endpoint": "POST /api/claim",
+  "claim_body": {
+    "payload": "<18 concatenated payload tokens>"
+  },
+  "claim_gate": "all reachable graph shingles must first be resolved: one routed allowed response, or blocked responses from both routed profiles",
+  "scoreboard_flag_format": "SHA{...}",
+  "note": "Only an output that normalizes to exactly one 5-token window is tested."
+}
